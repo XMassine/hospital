@@ -1,0 +1,41 @@
+from app.db.mongo import db
+
+
+
+
+def init_sample_data():
+    #Utilisateurs (admin + médecins + patients)
+    users = [
+        {"id": "admin001", "email": "admin@cabinet.com", "password": "admin123", "role": "admin"},
+        {"id": "med001", "email": "med1@cabinet.com", "password": "med123", "role": "medecin"},
+        {"id": "med002", "email": "med2@cabinet.com", "password": "med123", "role": "medecin"},
+        {"id": "med003", "email": "med3@cabinet.com", "password": "med123", "role": "medecin"},
+        {"id": "pat001", "email": "pat1@cabinet.com", "password": "pat123", "role": "patient"},
+        {"id": "pat002", "email": "pat2@cabinet.com", "password": "pat123", "role": "patient"},
+        {"id": "pat003", "email": "pat3@cabinet.com", "password": "pat123", "role": "patient"},
+    ]
+
+    for user in users:
+        if db['users'].count_documents({"email": user["email"]}) == 0:
+            db['users'].insert_one(user)
+            print(f"Ajout utilisateur : {user['email']}")
+        else:
+            print(f"Utilisateur existe : {user['email']}")
+
+    # Consultations
+    consultations = [
+        {"id": "c001", "patient_id": "pat001", "medecin_id": "med001", "date": "2025-06-01", "description": "Consultation 1"},
+        {"id": "c002", "patient_id": "pat002", "medecin_id": "med001", "date": "2025-06-02", "description": "Consultation 2"},
+        {"id": "c003", "patient_id": "pat002", "medecin_id": "med002", "date": "2025-06-03", "description": "Consultation 3"},
+        {"id": "c004", "patient_id": "pat003", "medecin_id": "med001", "date": "2025-06-04", "description": "Consultation 4"},
+        {"id": "c005", "patient_id": "pat003", "medecin_id": "med002", "date": "2025-06-05", "description": "Consultation 5"},
+        {"id": "c006", "patient_id": "pat003", "medecin_id": "med003", "date": "2025-06-06", "description": "Consultation 6"},
+        {"id": "c007", "patient_id": "pat003", "medecin_id": "med001", "date": "2025-06-07", "description": "Consultation 7"},
+    ]
+
+    for consultation in consultations:
+        if db['consultations'].count_documents({"id": consultation["id"]}) == 0:
+            db['consultations'].insert_one(consultation)
+            print(f"Ajout consultation : {consultation['id']}")
+        else:
+            print(f"Consultation existe : {consultation['id']}")

@@ -1,38 +1,13 @@
-version: '3.8'
-
+version: '3'
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./backend:/app
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
-    depends_on:
-      - mongo
-      - neo4j
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-    command: ["npm", "start"]
-    stdin_open: true
-    tty: true
-    depends_on:
-      - backend
-
-  mongo:
+  mongodb:
     image: mongo
     ports:
       - "27017:27017"
-
   neo4j:
-    image: neo4j
+    image: neo4j:latest
     ports:
       - "7474:7474"
       - "7687:7687"
     environment:
-      NEO4J_AUTH: neo4j/test
+      NEO4J_AUTH: "neo4j/password"

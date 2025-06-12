@@ -1,7 +1,0 @@
-fastapi
-uvicorn
-pymongo
-neo4j
-passlib[bcrypt]
-python-jose[cryptography]
-python-dotenv
